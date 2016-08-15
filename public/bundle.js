@@ -26482,7 +26482,7 @@
 		return _react2.default.createElement(
 			'h2',
 			null,
-			'Examples '
+			'Examples'
 		);
 	};
 
