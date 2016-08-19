@@ -25600,10 +25600,9 @@
 	      _this.setState({
 	        count: newCount >= 0 ? newCount : 0
 	      });
+
 	      if (newCount === 0) {
-	        _this.setState({
-	          countdownStatus: 'stopped'
-	        });
+	        _this.setState({ countdownStatus: 'stopped' });
 	      }
 	    }, 1000);
 	  },
@@ -25634,6 +25633,11 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(
+	        'h1',
+	        { className: 'page-title' },
+	        'Countdown App'
+	      ),
 	      React.createElement(Clock, { totalSeconds: count }),
 	      renderControlArea()
 	    );
@@ -25774,7 +25778,7 @@
 	                    { className: 'button secondary', onClick: _this2.onStatusChange('paused') },
 	                    'Pause'
 	                );
-	            } else if (countdownStatus === 'paused') {
+	            } else {
 	                return _react2.default.createElement(
 	                    'button',
 	                    { className: 'button primary', onClick: _this2.onStatusChange('started') },
@@ -25809,21 +25813,72 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Clock = __webpack_require__(232);
+
+	var _Clock2 = _interopRequireDefault(_Clock);
+
+	var _Controls = __webpack_require__(234);
+
+	var _Controls2 = _interopRequireDefault(_Controls);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Timer = _react2.default.createClass({
 		displayName: 'Timer',
 
+		getInitialState: function getInitialState() {
+			return {
+				count: 0,
+				timerStatus: 'stopped'
+			};
+		},
+		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+			if (this.state.timerStatus !== prevState.timerStatus) {
+				switch (this.state.timerStatus) {
+					case 'started':
+						this.handleStart();
+						break;
+					case 'stopped':
+						this.setState({ count: 0 });
+					case 'paused':
+						clearInterval(this.timer);
+						this.timer = undefined;
+						break;
+				}
+			}
+		},
+		componentWillUnmount: function componentWillUnmount() {
+			clearInterval(this.timer);
+		},
+		handleStart: function handleStart() {
+			var _this = this;
 
+			this.timer = setInterval(function () {
+				_this.setState({
+					count: _this.state.count + 1
+				});
+			}, 1000);
+		},
+		handleStatusChange: function handleStatusChange(newTimerStatus) {
+			this.setState({
+				timerStatus: newTimerStatus
+			});
+		},
 		render: function render() {
+			var _state = this.state;
+			var count = _state.count;
+			var timerStatus = _state.timerStatus;
+
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(
 					'h1',
-					null,
-					'Timer here'
-				)
+					{ className: 'page-title' },
+					'Timer App'
+				),
+				_react2.default.createElement(_Clock2.default, { totalSeconds: count }),
+				_react2.default.createElement(_Controls2.default, { countdownStatus: timerStatus, onStatusChange: this.handleStatusChange })
 			);
 		}
 	});
@@ -26213,7 +26268,7 @@
 
 
 	// module
-	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n\n.clock {\n  align-items: center;\n  background-color: #B5D0E2;\n  border: 2px solid #2099E8;\n  border-radius: 50%;\n  display: flex;\n  height: 14rem;\n  width: 14rem;\n  justify-content: center;\n  margin: 4rem auto; }\n\n.clock-text {\n  color: white;\n  font-size: 2.25rem;\n  font-weight: 300; }\n\n.controls {\n  display: flex;\n  justify-content: center; }\n  .controls .button {\n    padding: .75rem 3rem; }\n  .controls .button:first-child {\n    margin-right: 1.5rem; }\n", ""]);
+	exports.push([module.id, ".top-bar, .top-bar ul {\n  background-color: #333333; }\n\n.top-bar .menu-text {\n  color: white; }\n\n.top-bar .menu > .menu-text > a {\n  display: inline;\n  padding: 0; }\n\n.top-bar .active-link {\n  font-weight: bold; }\n\n.clock {\n  align-items: center;\n  background-color: #B5D0E2;\n  border: 2px solid #2099E8;\n  border-radius: 50%;\n  display: flex;\n  height: 14rem;\n  width: 14rem;\n  justify-content: center;\n  margin: 4rem auto; }\n\n.clock-text {\n  color: white;\n  font-size: 2.25rem;\n  font-weight: 300; }\n\n.controls {\n  display: flex;\n  justify-content: center; }\n  .controls .button {\n    padding: .75rem 3rem; }\n  .controls .button:first-child {\n    margin-right: 1.5rem; }\n\n.page-title {\n  margin: 2rem 0;\n  text-align: center; }\n", ""]);
 
 	// exports
 
