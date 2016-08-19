@@ -18,7 +18,6 @@ describe('Controls', () => {
             var $pauseButton = $el.find('button:contains(Pause)');
 
             expect($pauseButton.length).toBe(1);
-            
         });
     });
     describe('render', () => {
